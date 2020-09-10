@@ -17,7 +17,7 @@ export const GalleryGrid: React.FC<PropTypes> = ({data}) => {
           title={e.title}
           url={e.url}
           description={e.description}
-          classname='postGrid'/>
+          className='postGrid'/>
       })}
     </div>
   );

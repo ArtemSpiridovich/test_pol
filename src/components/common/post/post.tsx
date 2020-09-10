@@ -6,16 +6,16 @@ type PropTypes = {
   title: string
   url: string
   description: string
-  classname: string
+  className: string
 }
 
-export const Post: React.FC<PropTypes> = ({img, title, url, description, classname}) => {
+export const Post: React.FC<PropTypes> = ({img, title, url, description, className}) => {
   return (
-    <div className={s[classname]}>
-      <img className={s[classname + '__img']} src={img} alt='image'/>
-      <h1 className={s[classname + '__title']}>{title}</h1>
-      <p className={s[classname + '__description']}>{description}</p>
-      <a className={s[classname + '__link']} href={url}>more</a>
+    <div className={s[className]}>
+      <img className={s[className + '__img']} src={img} alt='image'/>
+      <h1 className={s[className + '__title']}>{title}</h1>
+      <p className={s[className + '__description']}>{description}</p>
+      <a className={s[className + '__link']} href={url} target='_blank'>more</a>
     </div>
   );
 }

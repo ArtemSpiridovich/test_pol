@@ -2,17 +2,19 @@ import axios from "axios";
 import { ArticleType } from "../types/types";
 
 const instance = axios.create({
-  baseURL: `http://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=${process.env.REACT_APP_API_KEY}`
+  baseURL: `http://newsapi.org/v2`
   }
 )
 
+instance.interceptors.request.use(function (config){
+  config.params = {'apiKey': process.env.REACT_APP_API_KEY}
+  return config
+}, function (error) {
+  return Promise.reject(error)
+})
+
 export const api =  {
-  getPosts: () => {
-    return instance.get<ArticleType>('')
+  getPosts: (sources: string = 'techcrunch') => {
+    return instance.get<ArticleType>(`/top-headlines?sources=${sources}`)
   }
 };
-
-
-
-//f8505bcc9b764bf4ad7a4f6fdb97cd8d - API KEY
-//http://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=f8505bcc9b764bf4ad7a4f6fdb97cd8d

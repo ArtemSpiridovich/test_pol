@@ -5,8 +5,9 @@ import { ThunkAction } from "redux-thunk";
 import { AppStateType } from "./store";
 
 const initialState = {
-  data: [] as Array<PostType>,
-  filter: ''
+  posts: [] as Array<PostType>,
+  filter: '',
+  status: null as null | 'ok'
 };
 
 export type InitialStateType = typeof initialState
@@ -14,25 +15,30 @@ export type InitialStateType = typeof initialState
 export const postReducer = (state: InitialStateType = initialState, action: ReducerAction): InitialStateType => {
   switch (action.type) {
     case "SET-DATA":
-      return {...state, data: action.data}
+      return {...state, posts: action.posts}
     case "SET-FILTER":
       return {...state, filter: action.filter}
+    case "SET-STATUS":
+      return {...state, status: action.status}
     default:
       return state
   }
 }
 
-const getDataAC = (data: Array<PostType>) => ({type: "SET-DATA", data} as const)
+const getPostsAC = (posts: Array<PostType>) => ({type: "SET-DATA", posts} as const)
 const setFilterAC = (filter: string) => ({type: "SET-FILTER", filter} as const)
+const setStatusAC = (status: null | 'ok') => ({type: "SET-STATUS", status} as const)
 
 type ThunkType = ThunkAction<void, AppStateType, unknown, ReducerAction>
 
 export const getPosts = (): ThunkType => async (dispatch: Dispatch) => {
   try {
     const res = await api.getPosts()
-    dispatch(getDataAC(res.data.articles))
+    dispatch(getPostsAC(res.data.articles))
+    dispatch(setStatusAC('ok'))
   } catch (error) {
-    alert(error)
+    console.log(error)
+    dispatch(setStatusAC('ok'))
   }
 }
 
@@ -40,6 +46,7 @@ export const setFilter = (filter: string): ThunkType => (dispatch: Dispatch) => 
   dispatch(setFilterAC(filter))
 }
 
-type GetDataType = ReturnType<typeof getDataAC>
+type GetDataType = ReturnType<typeof getPostsAC>
+type setStatusAC = ReturnType<typeof setStatusAC>
 type SetFilterType = ReturnType<typeof setFilterAC>
-type ReducerAction = GetDataType | SetFilterType
+type ReducerAction = GetDataType | SetFilterType | setStatusAC

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import s from './header.module.sass'
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../redux/store";
@@ -11,7 +11,7 @@ export const Header: React.FC = () => {
   const dispatch = useDispatch()
   let filter = useSelector<AppStateType, string>(state => state.posts.filter)
   
-  const setValue = (e: any) => {
+  const setValue = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(setFilter(e.currentTarget.value))
   }
   

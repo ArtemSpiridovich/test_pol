@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {MutableRefObject, useRef} from 'react';
 import s from './carousel.module.sass'
 import AliceCarousel from 'react-alice-carousel'
 import 'react-alice-carousel/lib/alice-carousel.css'
@@ -7,8 +7,9 @@ import {PostType} from '../../../types/types';
 //images
 import left from '../../../assets/images/left-arrow.svg'
 import right from '../../../assets/images/right-arrow.svg'
-import disleft from '../../../assets/images/left-arrow-dis.svg'
-import disright from '../../../assets/images/right-arrow-dis.svg'
+import dis_left from '../../../assets/images/left-arrow-dis.svg'
+import dis_right from '../../../assets/images/right-arrow-dis.svg'
+import ReactAliceCarousel from "react-alice-carousel";
 
 
 type PropsType = {
@@ -17,7 +18,7 @@ type PropsType = {
 
 export const GalleryCarousel: React.FC<PropsType> = ({data}) => {
   
-  let carousel: any = React.createRef()
+  let carousel: MutableRefObject<ReactAliceCarousel | null | undefined> = useRef()
   
   const state = {
     galleryItems: data.map((e, i ) => {
@@ -27,7 +28,7 @@ export const GalleryCarousel: React.FC<PropsType> = ({data}) => {
           url={e.url}
           title={e.title}
           description={e.description}
-          classname="postCarousel"/>
+          className="postCarousel"/>
     })
   }
   
@@ -37,13 +38,13 @@ export const GalleryCarousel: React.FC<PropsType> = ({data}) => {
         dotsDisabled={true}
         buttonsDisabled={true}
         items={state.galleryItems}
-        ref={(el) => carousel = el}
+        ref={(el) => carousel.current = el}
       />
-      <button className={s.carousel__prev} disabled={data.length <= 1} onClick={() => carousel.slidePrev()}>
-        <img src={data.length <= 1 ? disleft : left} alt='arrow'/>
+      <button className={s.carousel__prev} disabled={data.length <= 1} onClick={() => carousel.current?.slidePrev()}>
+        <img src={data.length <= 1 ? dis_left : left} alt='arrow'/>
       </button>
-      <button className={s.carousel__next} disabled={data.length <= 1} onClick={() => carousel.slideNext()}>
-        <img src={data.length <= 1 ? disright : right} alt='arrow'/>
+      <button className={s.carousel__next} disabled={data.length <= 1} onClick={() => carousel.current?.slideNext()}>
+        <img src={data.length <= 1 ? dis_right : right} alt='arrow'/>
       </button>
     </div>
   );

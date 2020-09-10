@@ -4,18 +4,17 @@ import {GalleryGrid} from "./grid/gallery-grid"
 import {GalleryCarousel} from './carousel/gallery-carousel'
 import {useSelector} from 'react-redux'
 import {AppStateType} from "../../redux/store"
-import {InitialStateType} from '../../redux/post-reducer'
+import {GetItems} from "../../redux/selectors";
+import {PostType} from "../../types/types";
 //images
 import grid from '../../assets/images/grid.svg'
 import carousel from '../../assets/images/carousel.svg'
 
 export const Content: React.FC = () => {
   
-  let {data, filter} = useSelector<AppStateType, InitialStateType>(state => state.posts)
+  let posts = useSelector<AppStateType, Array<PostType>>(state => GetItems(state.posts))
   
-  let posts = data.filter(e => filter.toLowerCase() === e.title.slice(0, filter.length).toLowerCase())
-  
-  const [view, setView] = useState(false)
+  const [view, setView] = useState(true)
   
   let icon = view ? carousel : grid
   let value = !view

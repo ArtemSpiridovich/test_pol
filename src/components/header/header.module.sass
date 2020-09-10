@@ -1,0 +1,24 @@
+@import "../../styles/App"
+
+.header
+  height: 70px
+  box-shadow: 0 4px 20px 3px #e6e6e6
+  display: flex
+  justify-content: space-between
+  align-items: center
+  width: 100%
+  @extend .wrapper
+  &__logo
+    width: 50px
+  &__search
+    width: 230px
+    border: 2px solid silver
+    border-radius: 4px
+    height: 36px
+    font-size: 1rem
+    padding: 0 6px
+    outline: 1px solid transparent
+    &:focus
+      border: 2px solid black
+    @media screen and (max-width: 767px)
+      width: 200px

@@ -2,7 +2,7 @@ import axios from "axios";
 import { ArticleType } from "../types/types";
 
 const instance = axios.create({
-  baseURL: `http://newsapi.org/v2`
+  baseURL: `https://newsapi.org/v2`
   }
 )
 
